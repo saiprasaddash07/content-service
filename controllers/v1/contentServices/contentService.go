@@ -65,3 +65,13 @@ func DeleteContent(content *request.Content) (*request.Content, error) {
 	}
 	return content, nil
 }
+
+func FetchNewContents(size int) ([]request.Content, error) {
+	contents, err := DAO.FetchNewContents(size); 
+	
+	if err != nil {
+		return nil, err
+	}
+
+	return contents, nil
+}

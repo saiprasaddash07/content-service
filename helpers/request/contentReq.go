@@ -6,3 +6,8 @@ type Content struct {
 	Story     string `json:"story"`
 	UserId    int64  `json:"userId"`
 }
+
+type ContentFetchReq struct {
+	Size      int `json:"size"`
+	NextToken int `json:"nextToken"`
+}

@@ -21,6 +21,7 @@ type Config struct {
 	ServerPort           string
 	RedisAddress         string
 	CacheEnabled         bool
+	SizeOfNewContents    int
 }
 
 var config Config
@@ -64,6 +65,7 @@ func init() {
 	config.DBMaxOpenConnections, _ = strconv.Atoi(os.Getenv("DB_MAX_OPEN_CONNECTIONS"))
 	config.RedisAddress = os.Getenv("REDIS_ADDRESS")
 	config.CacheEnabled, _ = strconv.ParseBool(os.Getenv("CACHE_ENABLED"))
+	config.SizeOfNewContents, _ = strconv.Atoi(os.Getenv("SIZE_OF_NEW_CONTENTS"))
 }
 
 func Get() Config {

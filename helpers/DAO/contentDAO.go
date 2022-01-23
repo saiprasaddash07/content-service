@@ -80,3 +80,20 @@ func DeleteContent(content *request.Content) error {
 	}
 	return nil
 }
+
+func FetchNewContents(size int) ([]request.Content, error) {
+	var contents []request.Content
+	rows, err := db.GetClient(constants.DB_READER).Query("SELECT contentId, title, story, userId FROM content WHERE isDeleted=? ORDER BY contentId DESC LIMIT ?;", "false", size)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var content request.Content
+		err := rows.Scan(&content.ContentId, &content.Title, &content.Story, &content.UserId)
+		if err != nil {
+			return nil, err
+		}
+		contents = append(contents, content)
+	}
+	return contents, nil
+}

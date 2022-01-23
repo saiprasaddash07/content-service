@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/saiprasaddash07/content-service.git/config"
 	"github.com/saiprasaddash07/content-service.git/constants"
 	"github.com/saiprasaddash07/content-service.git/controllers/v1/contentServices"
 	"github.com/saiprasaddash07/content-service.git/controllers/v1/utils"
@@ -129,4 +130,13 @@ func DeleteContentHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, util.SendSuccessResponse(constants.DELETE_CONTENT_MESSAGE))
+}
+
+func FetchNewContents(c *gin.Context) {
+	contentRes, err := contentServices.FetchNewContents(config.Get().SizeOfNewContents)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
+		return
+	}
+	c.JSON(http.StatusOK, util.StructToJSON(contentRes))
 }
