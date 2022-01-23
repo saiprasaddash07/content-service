@@ -60,7 +60,22 @@ const (
 	MAX_FILE_SIZE = 10 * 1_024 * 1_024
 )
 
+const (
+	API_TYPE_CREATE_CONTENT = "createContent"
+)
+
 // response messages
 const (
 	UPLOAD_CSV_SUCCESS_MESSAGE = "CSV File Uploaded Successfully"
+	CREATE_CONTENT_MESSAGE     = "Content Created Successfully"
+)
+
+var (
+	CREATE_CONTENT_REQUIRED_FIELDS = []string{"title", "story", "userId"}
+	CREATE_CONTENT_OPTIONAL_FIELDS = []string{}
+)
+
+const (
+	MIN_LENGTH_OF_CONTENT_TITLE = 5
+	MAX_LENGTH_OF_CONTENT_TITLE = 100
 )

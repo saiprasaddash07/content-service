@@ -43,3 +43,11 @@ func UploadFile(file multipart.File, userId string) error {
 
 	return nil
 }
+
+func CreateContent(content *request.Content) (*request.Content, error) {
+	if err := DAO.CreateContent(content); err != nil {
+		return nil, err
+	}
+
+	return content, nil
+}

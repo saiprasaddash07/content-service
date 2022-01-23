@@ -2,7 +2,9 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/saiprasaddash07/content-service.git/constants"
 	v1 "github.com/saiprasaddash07/content-service.git/controllers/v1"
+	"github.com/saiprasaddash07/content-service.git/controllers/v1/middlewares"
 )
 
 func NewRouter() *gin.Engine {
@@ -14,6 +16,7 @@ func NewRouter() *gin.Engine {
 		contentGroupV1 := version1.Group("content")
 		{
 			contentGroupV1.POST("/upload", v1.UploadCSVFile)
+			contentGroupV1.POST("/create", middlewares.GetRequestBodyContent(constants.API_TYPE_CREATE_CONTENT, constants.CREATE_CONTENT_REQUIRED_FIELDS, constants.CREATE_CONTENT_OPTIONAL_FIELDS), v1.PostContentHandler)
 		}
 	}
 

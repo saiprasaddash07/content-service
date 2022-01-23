@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/saiprasaddash07/content-service.git/constants"
 	"github.com/saiprasaddash07/content-service.git/controllers/v1/contentServices"
+	"github.com/saiprasaddash07/content-service.git/controllers/v1/utils"
+	"github.com/saiprasaddash07/content-service.git/helpers/request"
 	"github.com/saiprasaddash07/content-service.git/helpers/response"
 	"github.com/saiprasaddash07/content-service.git/helpers/util"
 )
@@ -38,6 +40,40 @@ func UploadCSVFile(c *gin.Context) {
 	res := response.Response{
 		Status:  constants.API_SUCCESS_STATUS,
 		Message: constants.UPLOAD_CSV_SUCCESS_MESSAGE,
+	}
+	c.JSON(http.StatusOK, util.StructToJSON(res))
+}
+
+func PostContentHandler(c *gin.Context) {
+	contentFromContext, ok := c.Get("content")
+	if !ok {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(errors.New(constants.INVALID_REQUEST)))
+		return
+	}
+	content := contentFromContext.(*request.Content)
+
+	if err := utils.ValidateContentDetails(content); err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
+		return
+	}
+
+	contentRes, err := contentServices.CreateContent(content)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
+		return
+	}
+
+	createResponse := &response.Content{
+		ContentId: contentRes.ContentId,
+		Title:     contentRes.Title,
+		Story:     contentRes.Story,
+		UserId:    contentRes.UserId,
+	}
+
+	res := response.Response{
+		Status:  constants.API_SUCCESS_STATUS,
+		Message: constants.CREATE_CONTENT_MESSAGE,
+		Result:  createResponse,
 	}
 	c.JSON(http.StatusOK, util.StructToJSON(res))
 }

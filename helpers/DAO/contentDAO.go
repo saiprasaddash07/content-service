@@ -2,6 +2,7 @@ package DAO
 
 import (
 	"log"
+	"strings"
 
 	"github.com/saiprasaddash07/content-service.git/constants"
 	"github.com/saiprasaddash07/content-service.git/helpers/request"
@@ -35,4 +36,19 @@ func DoesUserExist(userId int64) bool {
 		return false
 	}
 	return true
+}
+
+func CreateContent(content *request.Content) error {
+	content.Title = strings.TrimSpace(content.Title)
+	content.Story = strings.TrimSpace(content.Story)
+	rows, err := db.GetClient(constants.DB_WRITER).Exec("INSERT INTO content (title, story, userId) VALUES (?,?,?);", content.Title, content.Story, content.UserId)
+	if err != nil {
+		return err
+	}
+	contentId, err := rows.LastInsertId()
+	if err != nil {
+		return err
+	}
+	content.ContentId = contentId
+	return nil
 }
