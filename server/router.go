@@ -17,6 +17,7 @@ func NewRouter() *gin.Engine {
 		{
 			contentGroupV1.POST("/upload", v1.UploadCSVFile)
 			contentGroupV1.POST("/create", middlewares.GetRequestBodyContent(constants.API_TYPE_CREATE_CONTENT, constants.CREATE_CONTENT_REQUIRED_FIELDS, constants.CREATE_CONTENT_OPTIONAL_FIELDS), v1.PostContentHandler)
+			contentGroupV1.POST("/edit", middlewares.GetRequestBodyContent(constants.API_TYPE_EDIT_CONTENT, constants.EDIT_CONTENT_REQUIRED_FIELDS, constants.EDIT_CONTENT_OPTIONAL_FIELDS), v1.EditContentHandler)
 		}
 	}
 

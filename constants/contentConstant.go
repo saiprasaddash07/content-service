@@ -47,13 +47,14 @@ const (
 	ERROR_USER_IDS_NOT_FOUND     = "userIds not found"
 	INVALID_REQUEST              = "invalid json request body"
 	INVALID_CSV_REQUEST          = "invalid csv form body"
-	INVALID_MAIL_ID              = "invalid email address provided"
+	INVALID_CONTENT_ID           = "invalid contentId"
 	ERROR_IN_HASHING_PASSWORD    = "error while hashing password"
 	ERROR_IN_STORING_UNIQUE_USER = "the user already exists"
 	ERROR_IN_AUTHENTICATING_USER = "the password is incorrect"
 	USER_ID_NOT_ARRAY_OF_INT     = "userIds must be an array of integers"
 	ERROR_NO_USER_EXIST          = "User does not exist"
 	FILE_SIZE_EXCEEDED           = "file size exceeded"
+	CONTENT_DOES_NOT_BELONG_TO_USER = "content does not belong to user"
 )
 
 const (
@@ -62,17 +63,22 @@ const (
 
 const (
 	API_TYPE_CREATE_CONTENT = "createContent"
+	API_TYPE_EDIT_CONTENT   = "editContent"
 )
 
 // response messages
 const (
 	UPLOAD_CSV_SUCCESS_MESSAGE = "CSV File Uploaded Successfully"
 	CREATE_CONTENT_MESSAGE     = "Content Created Successfully"
+	EDIT_CONTENT_MESSAGE       = "Content Edited Successfully"
 )
 
 var (
 	CREATE_CONTENT_REQUIRED_FIELDS = []string{"title", "story", "userId"}
 	CREATE_CONTENT_OPTIONAL_FIELDS = []string{}
+
+	EDIT_CONTENT_REQUIRED_FIELDS = []string{"title", "story", "userId"}
+	EDIT_CONTENT_OPTIONAL_FIELDS = []string{}
 )
 
 const (

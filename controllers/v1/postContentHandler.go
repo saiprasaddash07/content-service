@@ -2,6 +2,7 @@ package v1
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -52,7 +53,7 @@ func PostContentHandler(c *gin.Context) {
 	}
 	content := contentFromContext.(*request.Content)
 
-	if err := utils.ValidateContentDetails(content); err != nil {
+	if err := utils.ValidateContentDetails(content, constants.API_TYPE_CREATE_CONTENT); err != nil {
 		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
 		return
 	}
@@ -73,6 +74,36 @@ func PostContentHandler(c *gin.Context) {
 	res := response.Response{
 		Status:  constants.API_SUCCESS_STATUS,
 		Message: constants.CREATE_CONTENT_MESSAGE,
+		Result:  createResponse,
+	}
+	c.JSON(http.StatusOK, util.StructToJSON(res))
+}
+
+func EditContentHandler(c *gin.Context) {
+	contentFromContext, ok := c.Get("content")
+	log.Println(contentFromContext)
+	if !ok {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(errors.New(constants.INVALID_REQUEST)))
+		return
+	}
+	content := contentFromContext.(*request.Content)
+
+	contentRes, err := contentServices.UpdateContent(content)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
+		return
+	}
+
+	createResponse := &response.Content{
+		ContentId: contentRes.ContentId,
+		Title:     contentRes.Title,
+		Story:     contentRes.Story,
+		UserId:    contentRes.UserId,
+	}
+
+	res := response.Response{
+		Status:  constants.API_SUCCESS_STATUS,
+		Message: constants.EDIT_CONTENT_MESSAGE,
 		Result:  createResponse,
 	}
 	c.JSON(http.StatusOK, util.StructToJSON(res))

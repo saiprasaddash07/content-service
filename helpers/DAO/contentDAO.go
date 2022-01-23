@@ -38,6 +38,18 @@ func DoesUserExist(userId int64) bool {
 	return true
 }
 
+func DoesContentBelongsToUser(userId int64, contentId int64) bool {
+	var count int64
+	err := db.GetClient(constants.DB_READER).QueryRow("SELECT COUNT(*) AS count FROM content WHERE userId=? AND contentId=?;", userId, contentId).Scan(&count)
+	if err != nil {
+		return false
+	}
+	if count == 0 {
+		return false
+	}
+	return true
+}
+
 func CreateContent(content *request.Content) error {
 	content.Title = strings.TrimSpace(content.Title)
 	content.Story = strings.TrimSpace(content.Story)
@@ -50,5 +62,13 @@ func CreateContent(content *request.Content) error {
 		return err
 	}
 	content.ContentId = contentId
+	return nil
+}
+
+func UpdateContent(content *request.Content) error {
+	_, err := db.GetClient(constants.DB_WRITER).Exec("UPDATE content SET title=?, story=? WHERE contentId = ? AND userId=?", content.Title, content.Story, content.ContentId, content.UserId)
+	if err != nil {
+		return err
+	}
 	return nil
 }

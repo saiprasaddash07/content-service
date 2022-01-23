@@ -51,3 +51,10 @@ func CreateContent(content *request.Content) (*request.Content, error) {
 
 	return content, nil
 }
+
+func UpdateContent(content *request.Content) (*request.Content, error) {
+	if err := DAO.UpdateContent(content); err != nil {
+		return nil, err
+	}
+	return content, nil
+}

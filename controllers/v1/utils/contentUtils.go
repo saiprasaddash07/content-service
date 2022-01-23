@@ -55,7 +55,7 @@ func ValidateAndParseContentFields(contentJSON map[string]interface{}, requiredF
 	return nil, false
 }
 
-func ValidateContentDetails(content *request.Content) error {
+func ValidateContentDetails(content *request.Content, apiType string) error {
 	if len(content.Title) < constants.MIN_LENGTH_OF_CONTENT_TITLE || len(content.Title) > constants.MAX_LENGTH_OF_CONTENT_TITLE {
 		return errors.New(constants.INVALID_REQUEST)
 	}
@@ -64,6 +64,11 @@ func ValidateContentDetails(content *request.Content) error {
 	}
 	if ok := DAO.DoesUserExist(content.UserId); !ok {
 		return errors.New(constants.INVALID_USER_ID)
+	}
+	if apiType == constants.API_TYPE_EDIT_CONTENT {
+		if ok := DAO.DoesContentBelongsToUser(content.UserId, content.ContentId); !ok {
+			return errors.New(constants.CONTENT_DOES_NOT_BELONG_TO_USER)
+		}
 	}
 	return nil
 }

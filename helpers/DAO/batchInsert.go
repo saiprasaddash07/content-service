@@ -1,7 +1,6 @@
 package DAO
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/saiprasaddash07/content-service.git/constants"
@@ -17,7 +16,7 @@ func WriteBatch(valuesToWrite []interface{}, writeSql string) error {
 		return err
 	}
 
-	writeSql += fmt.Sprintf(" ON DUPLICATE KEY UPDATE contentId = contentId")
+	writeSql += " ON DUPLICATE KEY UPDATE contentId = contentId"
 	_, err = stmt.Exec(valuesToWrite...)
 	if err != nil {
 		log.Println(err.Error())
