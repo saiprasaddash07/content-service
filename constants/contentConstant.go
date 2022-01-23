@@ -46,6 +46,7 @@ const (
 	INVALID_USER_ID              = "invalid userId"
 	ERROR_USER_IDS_NOT_FOUND     = "userIds not found"
 	INVALID_REQUEST              = "invalid json request body"
+	INVALID_CSV_REQUEST          = "invalid csv form body"
 	INVALID_MAIL_ID              = "invalid email address provided"
 	ERROR_IN_HASHING_PASSWORD    = "error while hashing password"
 	ERROR_IN_STORING_UNIQUE_USER = "the user already exists"
@@ -65,10 +66,7 @@ const (
 
 // response messages
 const (
-	CREATE_USER_MESSAGE = "User Created Successfully"
-	EDIT_USER_MESSAGE   = "Name Updated Successfully"
-	DELETE_USER_MESSAGE = "User Deleted Successfully"
-	FETCH_USER_MESSAGE  = "User Fetched Successfully"
+	UPLOAD_CSV_SUCCESS_MESSAGE = "CSV File Uploaded Successfully"
 )
 
 // required request body fields

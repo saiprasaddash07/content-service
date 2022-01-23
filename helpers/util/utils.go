@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"math"
+	"strings"
 )
 
 func StructToJSON(val interface{}) interface{} {
@@ -23,4 +24,8 @@ func Contains(str []string, key string) bool {
 
 func IsInteger(val float64) bool {
 	return math.Floor(val) == math.Ceil(val)
+}
+
+func ValidateCSV(val string) bool {
+	return strings.Split(val, ".")[1] == "csv"
 }

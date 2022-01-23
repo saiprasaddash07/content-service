@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	v1 "github.com/saiprasaddash07/content-service.git/controllers/v1"
 )
 
 func NewRouter() *gin.Engine {
@@ -10,9 +11,9 @@ func NewRouter() *gin.Engine {
 
 	version1 := router.Group("api/v1")
 	{
-		userGroupV1 := version1.Group("user")
+		contentGroupV1 := version1.Group("content")
 		{
-			userGroupV1.POST("/register")
+			contentGroupV1.POST("/upload", v1.UploadCSVFile)
 		}
 	}
 
