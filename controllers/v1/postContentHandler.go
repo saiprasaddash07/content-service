@@ -20,6 +20,11 @@ func UploadCSVFile(c *gin.Context) {
 		return
 	}
 
+	if header.Size > constants.MAX_FILE_SIZE {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(errors.New(constants.FILE_SIZE_EXCEEDED)))
+		return
+	}
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.SendErrorResponse(errors.New(constants.INVALID_CSV_REQUEST)))
 		return

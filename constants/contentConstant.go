@@ -53,36 +53,14 @@ const (
 	ERROR_IN_AUTHENTICATING_USER = "the password is incorrect"
 	USER_ID_NOT_ARRAY_OF_INT     = "userIds must be an array of integers"
 	ERROR_NO_USER_EXIST          = "User does not exist"
+	FILE_SIZE_EXCEEDED           = "file size exceeded"
 )
 
 const (
-	MIN_LENGTH_OF_FIRSTNAME = 2
-	MAX_LENGTH_OF_FIRSTNAME = 50
-	MIN_LENGTH_OF_LASTNAME  = 2
-	MAX_LENGTH_OF_LASTNAME  = 50
-	MIN_LENGTH_OF_PASSWORD  = 6
-	MAX_LENGTH_OF_PASSWORD  = 100
+	MAX_FILE_SIZE = 10 * 1_024 * 1_024
 )
 
 // response messages
 const (
 	UPLOAD_CSV_SUCCESS_MESSAGE = "CSV File Uploaded Successfully"
-)
-
-// required request body fields
-var (
-	USER_REGISTER_REQUIRED_FIELDS = []string{"firstName", "lastName", "password", "email", "mobileNo"}
-	USER_REGISTER_OPTIONAL_FIELDS = []string{"gender"}
-
-	USER_EDIT_REQUIRED_FIELDS = []string{"firstName", "lastName"}
-	USER_EDIT_OPTIONAL_FIELDS = []string{}
-
-	USER_DELETE_REQUIRED_FIELDS = []string{"password"}
-	USER_DELETE_OPTIONAL_FIELDS = []string{}
-)
-
-const (
-	API_TYPE_CREATE_USER = "createUser"
-	API_TYPE_EDIT_USER   = "editUser"
-	API_TYPE_DELETE_USER = "deleteUser"
 )
