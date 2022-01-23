@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/saiprasaddash07/content-service.git/constants"
@@ -107,4 +108,25 @@ func EditContentHandler(c *gin.Context) {
 		Result:  createResponse,
 	}
 	c.JSON(http.StatusOK, util.StructToJSON(res))
+}
+
+func DeleteContentHandler(c *gin.Context) {
+	contentId, err := strconv.ParseInt(c.Query("contentId"), 10, 64)
+	userId, err := strconv.ParseInt(c.Query("userId"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(errors.New(constants.INVALID_CONTENT_ID)))
+		return
+	}
+
+	var content request.Content
+	content.ContentId = contentId
+	content.UserId = userId
+
+	_, err = contentServices.DeleteContent(&content)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, util.SendSuccessResponse(constants.DELETE_CONTENT_MESSAGE))
 }

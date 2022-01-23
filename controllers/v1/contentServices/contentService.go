@@ -58,3 +58,10 @@ func UpdateContent(content *request.Content) (*request.Content, error) {
 	}
 	return content, nil
 }
+
+func DeleteContent(content *request.Content) (*request.Content, error) {
+	if err := DAO.DeleteContent(content); err != nil {
+		return nil, err
+	}
+	return content, nil
+}

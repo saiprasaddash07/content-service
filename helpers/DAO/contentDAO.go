@@ -72,3 +72,11 @@ func UpdateContent(content *request.Content) error {
 	}
 	return nil
 }
+
+func DeleteContent(content *request.Content) error {
+	_, err := db.GetClient(constants.DB_WRITER).Exec("UPDATE content SET isDeleted= ? WHERE contentId=? AND userId=?;", "true", content.ContentId, content.UserId)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -64,6 +64,8 @@ const (
 const (
 	API_TYPE_CREATE_CONTENT = "createContent"
 	API_TYPE_EDIT_CONTENT   = "editContent"
+	DELETE_CONTENT_MESSAGE = "deleteContent"
+	FETCH_CONTENT_MESSAGE  = "fetchContent"
 )
 
 // response messages
