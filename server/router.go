@@ -20,6 +20,7 @@ func NewRouter() *gin.Engine {
 			contentGroupV1.POST("/edit", middlewares.GetRequestBodyContent(constants.API_TYPE_EDIT_CONTENT, constants.EDIT_CONTENT_REQUIRED_FIELDS, constants.EDIT_CONTENT_OPTIONAL_FIELDS), v1.EditContentHandler)
 			contentGroupV1.POST("/delete", v1.DeleteContentHandler)
 			contentGroupV1.GET("/new/contents", v1.FetchNewContents)
+			contentGroupV1.GET("/top/contents", v1.FetchTopContents)
 		}
 	}
 

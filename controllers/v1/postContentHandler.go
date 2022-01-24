@@ -140,3 +140,12 @@ func FetchNewContents(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, util.StructToJSON(contentRes))
 }
+
+func FetchTopContents(c *gin.Context) {
+	contentRes, err := contentServices.FetchTopContents()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.SendErrorResponse(err))
+		return
+	}
+	c.JSON(http.StatusOK, util.StructToJSON(contentRes))
+}

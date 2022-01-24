@@ -97,3 +97,22 @@ func FetchNewContents(size int) ([]request.Content, error) {
 	}
 	return contents, nil
 }
+
+func FetchContents(ids []interface{}) ([]request.Content, error) {
+	var contents []request.Content
+	query := `SELECT contentId, title, story, userId FROM content WHERE contentId IN (?` + strings.Repeat(",?", len(ids)-1) + ");"
+	log.Println(query)
+	rows, err := db.GetClient(constants.DB_READER).Query(query, ids...)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var content request.Content
+		err := rows.Scan(&content.ContentId, &content.Title, &content.Story, &content.UserId)
+		if err != nil {
+			return nil, err
+		}
+		contents = append(contents, content)
+	}
+	return contents, nil
+}

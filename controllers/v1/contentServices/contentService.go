@@ -3,13 +3,16 @@ package contentServices
 import (
 	"encoding/csv"
 	"errors"
+	"log"
 	"mime/multipart"
 	"strconv"
 	"strings"
 
+	"github.com/saiprasaddash07/content-service.git/config"
 	"github.com/saiprasaddash07/content-service.git/constants"
 	"github.com/saiprasaddash07/content-service.git/helpers/DAO"
 	"github.com/saiprasaddash07/content-service.git/helpers/request"
+	"github.com/saiprasaddash07/content-service.git/helpers/util"
 )
 
 func UploadFile(file multipart.File, userId string) error {
@@ -67,11 +70,38 @@ func DeleteContent(content *request.Content) (*request.Content, error) {
 }
 
 func FetchNewContents(size int) ([]request.Content, error) {
-	contents, err := DAO.FetchNewContents(size); 
-	
+	contents, err := DAO.FetchNewContents(size)
+
 	if err != nil {
 		return nil, err
 	}
 
 	return contents, nil
+}
+
+func FetchTopContents() ([]request.Content, error) {
+	contents, err := util.CallAPI(config.Get().InteractionServiceBaseUrl + "api/v1/interaction/topContents")
+	if err != nil {
+		return nil, err
+	}
+
+	var idList []interface{}
+	contents = strings.Trim(contents, "[]")
+	contentIds := strings.Split(string(contents), ",")
+	for _, contentId := range contentIds {
+		id, err := strconv.ParseInt(contentId, 10, 64)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		idList = append(idList, id)
+	}
+
+	contentLists, err := DAO.FetchContents(idList)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return contentLists, nil
 }

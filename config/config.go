@@ -8,20 +8,22 @@ import (
 )
 
 type Config struct {
-	AppName              string
-	AppEnv               string
-	DBUserName           string
-	DBHostReader         string
-	DBHostWriter         string
-	DBPort               string
-	DBPassword           string
-	DBName               string
-	DBMaxIdleConnections int
-	DBMaxOpenConnections int
-	ServerPort           string
-	RedisAddress         string
-	CacheEnabled         bool
-	SizeOfNewContents    int
+	AppName                   string
+	AppEnv                    string
+	DBUserName                string
+	DBHostReader              string
+	DBHostWriter              string
+	DBPort                    string
+	DBPassword                string
+	DBName                    string
+	DBMaxIdleConnections      int
+	DBMaxOpenConnections      int
+	ServerPort                string
+	RedisAddress              string
+	CacheEnabled              bool
+	SizeOfNewContents         int
+	UserInteractionHeader     string
+	InteractionServiceBaseUrl string
 }
 
 var config Config
@@ -66,6 +68,8 @@ func init() {
 	config.RedisAddress = os.Getenv("REDIS_ADDRESS")
 	config.CacheEnabled, _ = strconv.ParseBool(os.Getenv("CACHE_ENABLED"))
 	config.SizeOfNewContents, _ = strconv.Atoi(os.Getenv("SIZE_OF_NEW_CONTENTS"))
+	config.UserInteractionHeader = os.Getenv("USER_INTERACTION_HEADER")
+	config.InteractionServiceBaseUrl = os.Getenv("INTERACTION_SERVICE_BASE_URL")
 }
 
 func Get() Config {
